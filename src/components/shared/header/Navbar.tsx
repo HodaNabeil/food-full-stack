@@ -9,8 +9,13 @@ import { useState } from "react";
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const navLinks = [
-    {
+       {
       title: "Home",
+      href: Routes.ROOT,
+      id: crypto.randomUUID(),
+    },
+    {
+      title: "Menu",
       href: Routes.MENU,
       id: crypto.randomUUID(),
     },

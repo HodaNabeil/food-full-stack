@@ -5,15 +5,16 @@ import { ProductWithRelations } from "@/types/product";
 
 export default function ItemMenu({ item }: { item: ProductWithRelations }) {
   return (
-    <li className="flex flex-col items-center p-4 border rounded-lg">
-      <div className="relative w-32 h-32">
+    <li className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+      <div className="relative h-64 w-full">
         <Image
           src={item.image}
           alt={item.name}
           fill
           priority
           loading="eager"
-          className="object-contain"
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
 
@@ -26,7 +27,9 @@ export default function ItemMenu({ item }: { item: ProductWithRelations }) {
         {item.description}
       </p>
 
-      <AddToCard item={item} />
+      <div className="flex justify-center pb-4">
+        <AddToCard item={item} />
+      </div>
     </li>
   );
 }

@@ -88,7 +88,7 @@ export function PickSize({ item }: { item: ProductWithRelations }) {
 export function Extras({ item }: { item: ProductWithRelations }) {
   return (
     <RadioGroup defaultValue="comfortable">
-      {item.Exra.map((extra) => {
+      {item.extras.map((extra) => {
         return (
           <div
             className="flex items-center space-x-2 border border-gray-100 rounded-md p-4"

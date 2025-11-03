@@ -1,3 +1,4 @@
+import TopMainHeader from "@/components/shared/top-main-header";
 import Menu from "./Menu";
 
 export default function BestSellers() {
@@ -5,10 +6,7 @@ export default function BestSellers() {
     <section>
       <div className="container">
         <div className="element-center flex-col ">
-          <span className="text-accent uppercase font-bold">Check out </span>
-          <h2 className="capitalize text-4xl font-bold italic text-primary">
-            our Best Sellers
-          </h2>
+         <TopMainHeader subTitle="Check out" title='Our Best Sellers'/>
         </div>
         <Menu />
       </div>

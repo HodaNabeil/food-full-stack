@@ -1,7 +1,7 @@
-import BestSellers from "@/features/home/BestSellers";
-import Hero from "@/features/home/Hero";
+import BestSellers from "@/features/home/components/BestSellers";
+import Hero from "@/features/home/components/Hero";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main>
       <Hero />
