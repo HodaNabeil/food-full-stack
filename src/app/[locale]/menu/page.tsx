@@ -1,5 +1,5 @@
 import { getProductsByCategory } from "@/features/menu/hooks/useQueries";
-import ItemMenu from "@/features/home/components/ItemMenu";
+import ItemMenu from "@/features/menu/hooks/components/ItemMenu";
 
 export default async function MenuPage() {
   const categories = await getProductsByCategory();

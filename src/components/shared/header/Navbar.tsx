@@ -1,51 +1,48 @@
 "use client";
 
-import { Pages, Routes } from "@/constants/enums";
 import Link from "../link/Link";
 import { Button } from "@/components/ui/button";
-import { MenuIcon, XIcon } from "lucide-react";
+import { Menu, XIcon } from "lucide-react";
 import { useState } from "react";
-
-export default function Navbar() {
+import { useParams, usePathname } from "next/navigation";
+import { Translations } from "@/types/translations";
+import { Routes } from "@/constants/enums";
+import LanguageSwitcher from "./language-switcher";
+export default function Navbar({
+  translations,
+}: {
+  translations: Translations;
+}) {
   const [openMenu, setOpenMenu] = useState(false);
-  const navLinks = [
-       {
-      title: "Home",
-      href: Routes.ROOT,
-      id: crypto.randomUUID(),
-    },
+  const { locale } = useParams();
+  const pathname = usePathname();
+  const links = [
     {
-      title: "Menu",
+      id: crypto.randomUUID(),
+      title: translations.navbar.menu,
       href: Routes.MENU,
-      id: crypto.randomUUID(),
     },
     {
-      title: "About",
+      id: crypto.randomUUID(),
+      title: translations.navbar.about,
       href: Routes.ABOUT,
-      id: crypto.randomUUID(),
     },
     {
-      title: "Contact",
+      id: crypto.randomUUID(),
+      title: translations.navbar.contact,
       href: Routes.CONTACT,
-      id: crypto.randomUUID(),
-    },
-    {
-      title: "Login",
-      href: Pages.LOGIN,
-      id: crypto.randomUUID(),
     },
   ];
   return (
-    <nav>
+    <nav className="order-last lg:order-none">
       <Button
         variant="secondary"
         size="sm"
-        className="absolute top-[30px] right-10 lg:hidden cursor-pointer"
+        className="lg:hidden"
         onClick={() => setOpenMenu(true)}
       >
-        <MenuIcon className="!w-6 !h-6" />
+        <Menu className="!w-6 !h-6" />
       </Button>
-
       <ul
         className={`fixed lg:static ${
           openMenu ? "left-0 z-50" : "-left-full"
@@ -54,30 +51,30 @@ export default function Navbar() {
         <Button
           variant="secondary"
           size="sm"
-          className="absolute  top-[30px]  right-10 lg:hidden cursor-pointer"
+          className="absolute top-10 right-10 lg:hidden"
           onClick={() => setOpenMenu(false)}
         >
           <XIcon className="!w-6 !h-6" />
         </Button>
-        {navLinks.map((link) => {
-          return (
-            <li key={link.id}>
-              <Link
-                href={`/${link.href}`}
-                className={`font-medium text-foreground   transition-all duration-300 ease-out 
-                    
-                    ${
-                      link.href === Pages.LOGIN
-                        ? "bg-primary text-white px-4 py-2  hover:bg-primary/80  text-sm rounded-full"
-                        : "text-foreground hover:text-primary"
-                    }
-                    `}
-              >
-                {link.title}
-              </Link>
-            </li>
-          );
-        })}
+        {links.map((link) => (
+          <li key={link.id}>
+            <Link
+              onClick={() => setOpenMenu(false)}
+              href={`/${locale}/${link.href}`}
+              className={`hover:text-primary duration-200 transition-colors font-semibold ${
+                pathname.startsWith(`/${locale}/${link.href}`)
+                  ? "text-primary"
+                  : "text-accent"
+              }`}
+            >
+              {link.title}
+            </Link>
+          </li>
+        ))}
+
+        <li className="lg:hidden flex flex-col gap-4">
+          <LanguageSwitcher />
+        </li>
       </ul>
     </nav>
   );

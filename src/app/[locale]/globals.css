@@ -117,4 +117,7 @@
   .main-button {
     @apply !rounded-full px-3 py-6 text-center cursor-pointer;
   }
+  .section-gap {
+    @apply my-8 md:my-16;
+  }
 }

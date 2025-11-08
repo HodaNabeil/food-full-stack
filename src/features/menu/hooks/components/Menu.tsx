@@ -1,4 +1,4 @@
-import { fetchProducts } from "../hooks/useProductsQueries";
+import { fetchProducts } from "../../../home/hooks/useProductsQueries";
 import ItemMenu from "./ItemMenu";
 
 export default async function Menu() {

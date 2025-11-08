@@ -17,16 +17,53 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ProductWithRelations } from "@/types/product";
 import { useState } from "react";
 import { Extra, ProductSizes, Size } from "@prisma/client";
-import { useAppSelector } from "@/Redux/hooks";
-import { selectCartItems } from "@/Redux/features/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
+import {
+  addCartItem,
+  removeCartItem,
+  removeItemFromCart,
+  selectCartItems,
+} from "@/Redux/features/cartSlice";
+import { getItemQuantity } from "@/lib/cart";
 
 export default function AddToCard({ item }: { item: ProductWithRelations }) {
   const cart = useAppSelector(selectCartItems);
+  const dispatch = useAppDispatch();
+
+  const quantity = getItemQuantity(item.id, cart);
+
   const defaultSize =
     cart.find((el) => el.id === item.id)?.size ||
     item.size.find((size) => size.name === ProductSizes.SMALL);
+
+  const defaultExtras = cart.find((el) => el.id === item.id)?.extras || [];
+
   const [selectedSize, setselectedSize] = useState<Size>(defaultSize!);
-  const [selectedExtras, setselectedExtras] = useState<Extra[]>([]);
+  const [selectedExtras, setselectedExtras] = useState<Extra[]>(defaultExtras!);
+  let totalPrice = item.basePrice;
+
+  if (selectedSize) {
+    totalPrice += selectedSize.price;
+  }
+  if (selectedExtras.length > 0) {
+    for (const extra of selectedExtras) {
+      totalPrice += extra.price;
+    }
+  }
+
+  const handleAddToCart = () => {
+    dispatch(
+      addCartItem({
+        basePrice: item.basePrice,
+        id: item.id,
+        image: item.image,
+        name: item.name,
+        size: selectedSize,
+        extras: selectedExtras,
+      })
+    );
+  };
+
   return (
     <Dialog>
       <form>
@@ -35,12 +72,13 @@ export default function AddToCard({ item }: { item: ProductWithRelations }) {
         </DialogTrigger>
         <DialogContent className="max-w-[425px] max-h-[70vh] overflow-y-auto">
           <DialogHeader className="flex  flex-col gap-2 justify-center items-center">
-            <DialogTitle className="relative w-[200px] h-[200px] ">
+            <DialogTitle className="relative w-[200px] h-[200px]  ">
               <Image
                 src={item.image}
                 fill
-                className="object-cover"
+                className="object-cover "
                 alt={item.id}
+                style={{ borderRadius: "4px" }}
               />
             </DialogTitle>
             <span className="font-black text-xl capitalize  text-foreground">
@@ -74,9 +112,23 @@ export default function AddToCard({ item }: { item: ProductWithRelations }) {
             />
           </div>
           <DialogFooter>
-            <Button type="submit" className="main-button  w-full">
-              Add To Cart
-            </Button>
+            {quantity > 0 ? (
+              <ChooseQuantity
+                quantity={quantity}
+                item={item}
+                selectedExtras={selectedExtras}
+                selectedSize={selectedSize}
+                quantity={quantity}
+              />
+            ) : (
+              <Button
+                type="submit"
+                className="main-button  w-full"
+                onClick={handleAddToCart}
+              >
+                Add To Cart {formatCurrency(totalPrice)}
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </form>
@@ -127,9 +179,14 @@ export function Extras({
   selectedExtras: Extra[];
   setSelectedExtras: React.Dispatch<React.SetStateAction<Extra[]>>;
 }) {
-  const handleExtra =(extra:Extra)=> {
-    if()
-  }
+  const handleExtra = (extra: Extra) => {
+    if (selectedExtras.find((el) => el.id === extra.id)) {
+      const filteredExtras = selectedExtras.filter((el) => el.id !== extra.id);
+      setSelectedExtras(filteredExtras);
+    } else {
+      setSelectedExtras([...selectedExtras, extra]);
+    }
+  };
   return (
     <RadioGroup defaultValue="comfortable">
       {item.extras.map((extra) => {
@@ -138,7 +195,11 @@ export function Extras({
             className="flex items-center space-x-2 border border-gray-100 rounded-md p-4"
             key={extra.id}
           >
-            <Checkbox id={extra.id} onClick={} checked={isExtraSelected} />
+            <Checkbox
+              id={extra.id}
+              onClick={() => handleExtra(extra)}
+              checked={Boolean(selectedExtras.find((el) => el.id === extra.id))}
+            />
             <Label htmlFor={extra.id}>
               {extra.name} {formatCurrency(item.basePrice + extra.price)}
             </Label>
@@ -146,5 +207,61 @@ export function Extras({
         );
       })}
     </RadioGroup>
+  );
+}
+
+function ChooseQuantity({
+  item,
+  quantity,
+  selectedExtras,
+  selectedSize,
+}: {
+  item: ProductWithRelations;
+  quantity: number;
+  selectedExtras: Extra[];
+  selectedSize: Size;
+}) {
+  const dispatch = useAppDispatch();
+  return (
+    <div className="flex items-center flex-col gap-2 mt-4 w-full">
+      <div className="flex items-center justify-center gap-3 lg:gap-9">
+        <Button
+          variant="outline"
+          onClick={() => dispatch(removeCartItem({ id: item.id }))}
+          className="hover:bg-white  border-gray-300 border-1   !cursor-pointer"
+        >
+          -
+        </Button>
+        <div>
+          <span className="text-black"> {quantity}</span>
+        </div>
+        <Button
+          className="hover:bg-white  border-gray-300 border-1   !cursor-pointer"
+          s
+          variant="outline"
+          onClick={() =>
+            dispatch(
+              addCartItem({
+                id: item.id,
+                basePrice: item.basePrice,
+                image: item.image,
+                name: item.name,
+                extras: selectedExtras,
+                size: selectedSize,
+              })
+            )
+          }
+        >
+          +
+        </Button>
+      </div>
+      <Button
+        size="sm"
+        onClick={() => dispatch(removeItemFromCart({ id: item.id }))}
+        className="  !cursor-pointer"
+      >
+        Remove
+      </Button>
+    </div>
   );
 }
