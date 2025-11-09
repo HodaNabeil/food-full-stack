@@ -1,12 +1,16 @@
 import { getProductsByCategory } from "@/features/menu/hooks/useQueries";
 import ItemMenu from "@/features/menu/hooks/components/ItemMenu";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
 
 export default async function MenuPage() {
   const categories = await getProductsByCategory();
+  const locale = await getCurrentLocale();
+  const { menu } = await getTrans(locale);
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-12">Our Menu</h1>
+      <h1 className="text-4xl font-bold text-center mb-12">{menu.title}</h1>
 
       {categories.map((category) => (
         <section key={category.id} className="mb-16">
@@ -25,7 +29,7 @@ export default async function MenuPage() {
           ) : (
             <div className="flex justify-center items-center py-10">
               <p className="text-center text-gray-600 italic">
-                No products available in this category.
+                {menu.noProductsAvailable}
               </p>
             </div>
           )}

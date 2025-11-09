@@ -1,8 +1,12 @@
 import { fetchProducts } from "../../../home/hooks/useProductsQueries";
 import ItemMenu from "./ItemMenu";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
 
 export default async function Menu() {
   const bestSellers = await fetchProducts(3);
+  const locale = await getCurrentLocale();
+  const { menu } = await getTrans(locale);
 
   return (
     <>
@@ -15,7 +19,7 @@ export default async function Menu() {
       ) : (
         <div className="flex justify-center items-center py-10">
           <p className="text-center text-gray-600 italic">
-            No best sellers available.
+            {menu.noBestSellers}
           </p>
         </div>
       )}

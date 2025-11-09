@@ -7,7 +7,16 @@ import CardItem from "./CartItem";
 import { formatCurrency } from "@/lib/formatters";
 import { deliveryFee, getSubTotal } from "@/lib/cart";
 
-export default function CartItems() {
+interface CartItemsProps {
+  translations: {
+    subtotal: string;
+    delivery: string;
+    total: string;
+    emptyCart: string;
+  };
+}
+
+export default function CartItems({ translations }: CartItemsProps) {
   const cart = useAppSelector(selectCartItems);
   const subTotal = getSubTotal(cart);
   return (
@@ -23,17 +32,17 @@ export default function CartItems() {
           </ul>
           <div className="flex flex-col justify-end items-end pt-6">
             <span className="text-accent font-medium">
-              Subtotal:
+              {translations.subtotal}
               <strong className="text-black">{formatCurrency(subTotal)}</strong>
             </span>
             <span className="text-accent font-medium">
-              Delivery:
+              {translations.delivery}
               <strong className="text-black">
                 {formatCurrency(deliveryFee)}
               </strong>
             </span>
             <span className="text-accent font-medium">
-              Total:
+              {translations.total}
               <strong className="text-black">
                 {formatCurrency(subTotal + deliveryFee)}
               </strong>
@@ -42,7 +51,7 @@ export default function CartItems() {
         </div>
       ) : (
         <div>
-          <p className="text-accent">Your cart is empty</p>
+          <p className="text-accent">{translations.emptyCart}</p>
         </div>
       )}
     </>

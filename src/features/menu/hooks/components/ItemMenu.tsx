@@ -2,8 +2,13 @@ import { formatCurrency } from "@/lib/formatters";
 import Image from "next/image";
 import AddToCard from "./AddToCard";
 import { ProductWithRelations } from "@/types/product";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
 
-export default function ItemMenu({ item }: { item: ProductWithRelations }) {
+export default async function ItemMenu({ item }: { item: ProductWithRelations }) {
+  const locale = await getCurrentLocale();
+  const { menuItem } = await getTrans(locale);
+
   return (
     <li className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
       <div className="relative h-64 w-full">
@@ -28,7 +33,7 @@ export default function ItemMenu({ item }: { item: ProductWithRelations }) {
       </p>
 
       <div className="flex justify-center pb-4">
-        <AddToCard item={item} />
+        <AddToCard item={item} translations={menuItem} />
       </div>
     </li>
   );

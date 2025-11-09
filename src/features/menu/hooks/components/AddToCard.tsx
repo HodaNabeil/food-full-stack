@@ -26,7 +26,17 @@ import {
 } from "@/Redux/features/cartSlice";
 import { getItemQuantity } from "@/lib/cart";
 
-export default function AddToCard({ item }: { item: ProductWithRelations }) {
+interface AddToCardProps {
+  item: ProductWithRelations;
+  translations: {
+    addToCart: string;
+    pickYourSize: string;
+    extras: string;
+    remove: string;
+  };
+}
+
+export default function AddToCard({ item, translations }: AddToCardProps) {
   const cart = useAppSelector(selectCartItems);
   const dispatch = useAppDispatch();
 
@@ -68,7 +78,7 @@ export default function AddToCard({ item }: { item: ProductWithRelations }) {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button className={"main-button my-4"}>Add to Cart</Button>
+          <Button className={"main-button my-4"}>{translations.addToCart}</Button>
         </DialogTrigger>
         <DialogContent className="max-w-[425px] max-h-[70vh] overflow-y-auto">
           <DialogHeader className="flex  flex-col gap-2 justify-center items-center">
@@ -91,7 +101,7 @@ export default function AddToCard({ item }: { item: ProductWithRelations }) {
             </DialogDescription>
           </DialogHeader>
           <h2 className="text-secondary-foreground  capitalize font-bold text-xl text-center">
-            Pick Your Size
+            {translations.pickYourSize}
           </h2>
 
           <div>
@@ -102,7 +112,7 @@ export default function AddToCard({ item }: { item: ProductWithRelations }) {
             />
           </div>
           <h2 className="text-secondary-foreground  capitalize font-bold text-xl text-center">
-            Extras
+            {translations.extras}
           </h2>
           <div>
             <Extras
@@ -118,7 +128,7 @@ export default function AddToCard({ item }: { item: ProductWithRelations }) {
                 item={item}
                 selectedExtras={selectedExtras}
                 selectedSize={selectedSize}
-                quantity={quantity}
+                translations={translations}
               />
             ) : (
               <Button
@@ -126,7 +136,7 @@ export default function AddToCard({ item }: { item: ProductWithRelations }) {
                 className="main-button  w-full"
                 onClick={handleAddToCart}
               >
-                Add To Cart {formatCurrency(totalPrice)}
+                {translations.addToCart} {formatCurrency(totalPrice)}
               </Button>
             )}
           </DialogFooter>
@@ -215,11 +225,15 @@ function ChooseQuantity({
   quantity,
   selectedExtras,
   selectedSize,
+  translations,
 }: {
   item: ProductWithRelations;
   quantity: number;
   selectedExtras: Extra[];
   selectedSize: Size;
+  translations: {
+    remove: string;
+  };
 }) {
   const dispatch = useAppDispatch();
   return (
@@ -237,7 +251,6 @@ function ChooseQuantity({
         </div>
         <Button
           className="hover:bg-white  border-gray-300 border-1   !cursor-pointer"
-          s
           variant="outline"
           onClick={() =>
             dispatch(
@@ -260,7 +273,7 @@ function ChooseQuantity({
         onClick={() => dispatch(removeItemFromCart({ id: item.id }))}
         className="  !cursor-pointer"
       >
-        Remove
+        {translations.remove}
       </Button>
     </div>
   );

@@ -108,7 +108,10 @@
     "deleteUserSucess": "User deleted successfull"
   },
   "menuItem": {
-    "addToCart": "Add to cart"
+    "addToCart": "Add to cart",
+    "pickYourSize": "Pick Your Size",
+    "extras": "Extras",
+    "remove": "Remove"
   },
   "profile": {
     "title": "Profile",
@@ -233,9 +236,109 @@
   "create": "Create",
   "cart": {
     "title": "Shopping Cart",
-    "noItemsInCart": "There are no items in your cart. Add some"
+    "noItemsInCart": "There are no items in your cart. Add some",
+    "subtotal": "Subtotal:",
+    "delivery": "Delivery:",
+    "total": "Total:",
+    "emptyCart": "Your cart is empty"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter your phone",
+    "streetAddress": "Street address",
+    "addressPlaceholder": "Enter your address",
+    "postalCode": "Postal code",
+    "postalCodePlaceholder": "Enter postal code",
+    "city": "City",
+    "cityPlaceholder": "Enter your City",
+    "country": "Country",
+    "countryPlaceholder": "Enter your country",
+    "pay": "Pay"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Welcome to our pizzeria, where passion meets perfection in every slice.",
+    "ourStory": "Our Story",
+    "storyParagraph1": "We are more than just a pizza restaurant – we're a family dedicated to bringing authentic flavors and unforgettable experiences to our community. Our journey began with a simple mission: to create pizzas that not only taste incredible but are made with ingredients you can trust.",
+    "storyParagraph2": "Every pizza that leaves our kitchen is crafted with care, using traditional techniques combined with modern culinary innovation. We believe that great food starts with great ingredients, and that's why we source only the finest, freshest components for our dishes.",
+    "ourCommitment": "Our Commitment",
+    "qualityIngredientsTitle": "Quality Ingredients",
+    "qualityIngredientsDesc": "We are committed to providing high-quality, clean food that you can feel good about eating. From our hand-tossed dough made fresh daily to our premium toppings, every ingredient is carefully selected to ensure the best taste and nutritional value.",
+    "exceptionalServiceTitle": "Exceptional Service",
+    "exceptionalServiceDesc": "Our dedication extends beyond the kitchen. We pride ourselves on delivering excellent service that makes every visit memorable. Our team is passionate about hospitality and works tirelessly to ensure your experience exceeds expectations.",
+    "whatSetsUsApart": "What Sets Us Apart",
+    "artisanCraftedTitle": "Artisan Crafted",
+    "artisanCraftedDesc": "Every pizza is handcrafted by skilled artisans who take pride in their work",
+    "freshCleanTitle": "Fresh & Clean",
+    "freshCleanDesc": "We use only fresh, clean ingredients with no artificial preservatives or additives",
+    "madeWithLoveTitle": "Made with Love",
+    "madeWithLoveDesc": "Each dish is prepared with passion and attention to detail",
+    "closingParagraph1": "Whether you're dining in, taking out, or having your meal delivered, we guarantee the same level of quality and care in every order. Thank you for choosing us and allowing us to be part of your dining experience.",
+    "closingParagraph2": "We look forward to serving you!"
+  },
+  "menu": {
+    "title": "Our Menu",
+    "noProductsAvailable": "No products available in this category.",
+    "noBestSellers": "No best sellers available."
   },
   "copyRight": "© 2024 All rights reserved",
   "noProductsFound": "No products found",
-  "noCategoriesFound": "No categories found"
+  "noCategoriesFound": "No categories found",
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "We'd love to hear from you! Whether you have a question, feedback, or just want to say hello.",
+    "form": {
+      "title": "Send us a Message",
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "What's this about?"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Write your message here..."
+      },
+      "submit": "Send Message",
+      "validation": {
+        "nameRequired": "Name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email",
+        "subjectRequired": "Subject is required",
+        "messageRequired": "Message is required"
+      }
+    },
+    "info": {
+      "title": "Contact Information",
+      "description": "Reach out to us through any of these channels. We're here to help!",
+      "phone": {
+        "title": "Phone",
+        "value": "+1 (555) 123-4567"
+      },
+      "email": {
+        "title": "Email",
+        "value": "hello@pizza.com"
+      },
+      "address": {
+        "title": "Address",
+        "value": "123 Pizza Street, Food City, FC 12345"
+      },
+      "hours": {
+        "title": "Opening Hours",
+        "weekdays": "Mon - Fri: 10:00 AM - 11:00 PM",
+        "weekends": "Sat - Sun: 11:00 AM - 12:00 AM"
+      }
+    },
+    "social": {
+      "title": "Follow Us",
+      "description": "Stay connected with us on social media"
+    }
+  }
 }
